@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const contactInfo = [
   {
@@ -23,11 +25,17 @@ const contactInfo = [
 ];
 
 export const ContactSection = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="plan" className="py-16 lg:py-24 bg-background">
+    <section id="plan" className="py-16 lg:py-24 bg-background" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
             <span className="inline-block px-4 py-1 bg-primary/10 rounded-full border border-primary/20 text-primary text-sm font-medium mb-4">
               contact us
             </span>
@@ -40,28 +48,43 @@ export const ContactSection = () => {
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <info.icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground mb-1">
-                          {info.title}
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                >
+                  <Card className="border-border/50 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1">
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-4">
+                        <motion.div 
+                          className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <info.icon className="h-6 w-6 text-primary" />
+                        </motion.div>
+                        <div>
+                          <div className="text-sm text-muted-foreground mb-1">
+                            {info.title}
+                          </div>
+                          <div className="text-lg font-semibold text-foreground">
+                            {info.details}
+                          </div>
                         </div>
-                        <div className="text-lg font-semibold text-foreground">
-                          {info.details}
-                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
             <Card className="border-border/50">
               <CardContent className="p-8">
                 <form className="space-y-6">
@@ -104,13 +127,13 @@ export const ContactSection = () => {
                     />
                   </div>
 
-                  <Button size="lg" className="w-full bg-primary hover:bg-accent text-primary-foreground">
+                  <Button size="lg" className="w-full bg-primary hover:bg-accent text-primary-foreground transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
                     Send message
                   </Button>
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { DollarSign, Leaf, Zap, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import renewableEnergyImage from "@/assets/renewable-energy.jpg";
 
 const benefits = [
@@ -26,54 +28,79 @@ const benefits = [
 ];
 
 export const WhyChooseUs = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="services" className="py-16 lg:py-24 bg-secondary">
+    <section id="services" className="py-16 lg:py-24 bg-secondary" ref={ref}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <span className="inline-block px-4 py-1 bg-primary/10 rounded-full border border-primary/20 text-primary text-sm font-medium mb-4">
             why choose us
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Why more and more people are choosing to switch to renewable energy
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-16">
-          <div className="order-2 md:order-1">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-2 md:order-1"
+          >
             <div className="grid gap-6">
               {benefits.map((benefit, index) => (
-                <Card key={index} className="border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <benefit.icon className="h-6 w-6 text-primary" />
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                >
+                  <Card className="border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg group hover:-translate-y-1 transform">
+                    <CardContent className="p-6">
+                      <div className="flex gap-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110 transform">
+                            <benefit.icon className="h-6 w-6 text-primary" />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-foreground mb-2">
+                            {benefit.title}
+                          </h3>
+                          <p className="text-muted-foreground">
+                            {benefit.description}
+                          </p>
                         </div>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2">
-                          {benefit.title}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {benefit.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="order-1 md:order-2">
-            <div className="relative rounded-2xl overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-1 md:order-2"
+          >
+            <div className="relative rounded-2xl overflow-hidden group">
               <img 
                 src={renewableEnergyImage} 
                 alt="Renewable energy installation"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
