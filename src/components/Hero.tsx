@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import heroImage from "@/assets/hero-wind-turbines.jpg";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -12,8 +14,17 @@ export const Hero = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 lg:pt-20">
+      {/* Layer 1: Background Image */}
       <motion.div 
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{ 
@@ -21,63 +32,87 @@ export const Hero = () => {
           transform: `translateY(${scrollY * 0.5}px)`
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
       </motion.div>
       
+      {/* Layer 2: Large "King power systems" Text (Background Layer) */}
+      <div className="absolute inset-0 z-5 flex items-center justify-center pointer-events-none">
+        <motion.h1 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] xl:text-[14rem] font-bold text-white/30 leading-none select-none"
+          style={{
+            transform: `translateY(${scrollY * 0.2}px)`,
+            letterSpacing: '-0.05em'
+          }}
+        >
+          Powering a Brighter Future
+        </motion.h1>
+      </div>
+      
+      {/* Layer 3: Foreground Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-32">
         <div className="max-w-4xl">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="inline-block mb-4 px-4 py-1 bg-primary/20 backdrop-blur-sm rounded-full border border-primary/30"
           >
             <span className="text-primary-foreground text-sm font-medium">why choose us</span>
           </motion.div>
           
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 leading-tight"
-          >
-            Green power
-          </motion.h1>
-          
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-xl sm:text-2xl lg:text-3xl text-white/90 mb-4 font-medium"
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white font-bold mb-4 leading-tight"
           >
-            real savings, zero hassle
+            Empowering homes and industries<br />with sustainable solar energy
           </motion.p>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl"
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl"
           >
-            Why more and more people are choosing to switch to renewable energy
+            Join thousands of satisfied customers who have made the switch to clean, renewable energy
           </motion.p>
           
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.6, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Button size="lg" className="bg-primary hover:bg-accent text-primary-foreground text-lg px-8 py-6 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-              Get started
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-2 border-white/80 text-white hover:bg-white/10 hover:text-white text-lg px-8 py-6 backdrop-blur-sm transform transition-all duration-300 hover:scale-105"
-            >
-              Learn more
-            </Button>
+            <Link to="/projects">
+              <Button 
+                size="lg" 
+                className="relative overflow-hidden text-lg px-8 py-6 rounded-full bg-white/5 backdrop-blur-2xl border-2 border-white/20 text-white shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] hover:shadow-[0_8px_48px_0_rgba(255,255,255,0.25)] transition-all duration-700 hover:scale-110 hover:border-white/40 hover:bg-white/10 group"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02))',
+                }}
+              >
+                <span className="relative z-10 font-semibold">View Our Projects</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 via-transparent to-white/3"></div>
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button 
+                size="lg" 
+                className="relative overflow-hidden text-lg px-8 py-6 rounded-full bg-white/3 backdrop-blur-2xl border-2 border-white/15 text-white shadow-[0_8px_32px_0_rgba(255,255,255,0.08)] hover:shadow-[0_8px_48px_0_rgba(255,255,255,0.2)] transition-all duration-700 hover:scale-110 hover:border-white/35 hover:bg-white/8 group"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01))',
+                }}
+              >
+                <span className="relative z-10 font-semibold">Get Quote</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/5 via-transparent to-white/3"></div>
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -87,7 +122,7 @@ export const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
@@ -96,6 +131,27 @@ export const Hero = () => {
         >
           <motion.div className="w-1 h-2 bg-white/70 rounded-full" />
         </motion.div>
+      </motion.div>
+
+      {/* Liquid Glass Cursor */}
+      <motion.div
+        className="fixed pointer-events-none z-50 w-12 h-12 rounded-full bg-white/25 backdrop-blur-2xl border-2 border-white/50 shadow-[0_8px_32px_0_rgba(255,255,255,0.35)]"
+        animate={{
+          left: cursorPos.x - 24,
+          top: cursorPos.y - 24,
+        }}
+        transition={{
+          type: "spring",
+          damping: 30,
+          stiffness: 300,
+          mass: 0.5,
+        }}
+        style={{
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%)',
+        }}
+      >
+        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/50 via-white/20 to-transparent"></div>
+        <div className="absolute inset-4 rounded-full bg-white/30 blur-sm"></div>
       </motion.div>
     </section>
   );

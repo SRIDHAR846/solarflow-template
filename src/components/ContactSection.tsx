@@ -15,7 +15,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    details: "info@ecoflux.com"
+    details: "ceo@cleanpowersystem.com"
   },
   {
     icon: MapPin,
@@ -88,48 +88,46 @@ export const ContactSection = () => {
             <Card className="border-border/50">
               <CardContent className="p-8">
                 <form className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 block">
-                        First name
-                      </label>
-                      <Input placeholder="John" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 block">
-                        Last name
-                      </label>
-                      <Input placeholder="Doe" />
-                    </div>
-                  </div>
-
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
-                      Email
+                      Your Name
                     </label>
-                    <Input type="email" placeholder="john@example.com" />
+                    <Input type="text" name="name" placeholder="Your Name" required />
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
-                      Phone
+                      Your Email
                     </label>
-                    <Input type="tel" placeholder="+1 (555) 000-0000" />
+                    <Input type="email" name="_replyto" placeholder="Your Email" required />
                   </div>
 
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
-                      Message
+                      Your Phone
+                    </label>
+                    <Input type="text" name="phone" placeholder="Your Phone" />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-2 block">
+                      Your Message
                     </label>
                     <Textarea 
-                      placeholder="Tell us about your energy needs..."
+                      name="message"
+                      placeholder="Your Message"
                       rows={5}
+                      required
                     />
                   </div>
 
-                  <Button size="lg" className="w-full bg-primary hover:bg-accent text-primary-foreground transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                    Send message
+                  <Button type="submit" size="lg" className="w-full bg-primary hover:bg-accent text-primary-foreground transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                    Send Message 📩
                   </Button>
+                  
+                  <p className="text-sm text-muted-foreground text-center">
+                    ✅ When someone submits, mail goes directly to ceo@cleanpowersystem.com.
+                  </p>
                 </form>
               </CardContent>
             </Card>

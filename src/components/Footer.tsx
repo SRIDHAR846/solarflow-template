@@ -1,3 +1,5 @@
+import { Linkedin, Instagram, Github } from "lucide-react";
+
 export const Footer = () => {
   return (
     <footer className="bg-foreground text-background py-12">
@@ -8,11 +10,17 @@ export const Footer = () => {
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
                 <div className="w-6 h-6 rounded-full border-2 border-primary-foreground"></div>
               </div>
-              <span className="text-xl font-bold">ECOFLUX</span>
+              <span className="text-xl font-bold">King Power Systems</span>
             </div>
-            <p className="text-background/70">
+            <p className="text-background/70 mb-4">
               Leading the way in renewable energy solutions for a sustainable future
             </p>
+            <div className="space-y-2 text-sm text-background/70">
+              <p><strong>Address:</strong> 123 Green Street, Eco City, EC 12345</p>
+              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+              <p><strong>Email:</strong> ceo@cleanpowersystem.com</p>
+              <p><strong>Working Hours:</strong> Mon-Fri: 9:00 AM - 6:00 PM</p>
+            </div>
           </div>
 
           <div>
@@ -45,8 +53,23 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-background/20 pt-8 text-center text-background/70">
-          <p>&copy; 2025 EcoFlux. All rights reserved.</p>
+        <div className="border-t border-background/20 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-background/70 text-center md:text-left">
+              © 2025 King Power Systems Pvt. Ltd. All rights reserved.
+            </p>
+            <div className="flex gap-4">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-background/70 hover:text-background transition-colors">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-background/70 hover:text-background transition-colors">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-background/70 hover:text-background transition-colors">
+                <Github className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
