@@ -1,5 +1,5 @@
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
+
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -93,7 +93,7 @@ const Testimonials = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation />
+      
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 lg:pt-40 lg:pb-24 bg-gradient-to-b from-background via-yellow-50/20 to-white">
@@ -210,7 +210,7 @@ const Testimonials = () => {
         </div>
       </section>
 
-      <Footer />
+      
     </div>
   );
 };

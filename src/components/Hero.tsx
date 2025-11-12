@@ -6,20 +6,11 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
@@ -60,7 +51,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="inline-block mb-4 px-4 py-1 bg-primary/20 backdrop-blur-sm rounded-full border border-primary/30"
           >
-            <span className="text-primary-foreground text-sm font-medium">why choose us</span>
+            <Link to="/about" className="text-primary-foreground text-sm font-medium">why choose us</Link>
           </motion.div>
           
           <motion.p 
@@ -131,27 +122,6 @@ export const Hero = () => {
         >
           <motion.div className="w-1 h-2 bg-white/70 rounded-full" />
         </motion.div>
-      </motion.div>
-
-      {/* Liquid Glass Cursor */}
-      <motion.div
-        className="fixed pointer-events-none z-50 w-12 h-12 rounded-full bg-white/25 backdrop-blur-2xl border-2 border-white/50 shadow-[0_8px_32px_0_rgba(255,255,255,0.35)]"
-        animate={{
-          left: cursorPos.x - 24,
-          top: cursorPos.y - 24,
-        }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 300,
-          mass: 0.5,
-        }}
-        style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%)',
-        }}
-      >
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/50 via-white/20 to-transparent"></div>
-        <div className="absolute inset-4 rounded-full bg-white/30 blur-sm"></div>
       </motion.div>
     </section>
   );

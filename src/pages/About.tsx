@@ -1,5 +1,3 @@
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { Target, Globe, Heart, TrendingUp, Users, Award } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,8 +35,6 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation />
-      
       {/* Hero Section */}
       <section className="pt-32 pb-16 lg:pt-40 lg:pb-24 bg-gradient-to-b from-background to-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -145,8 +141,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

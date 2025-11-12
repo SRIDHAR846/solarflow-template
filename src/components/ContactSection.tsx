@@ -87,7 +87,7 @@ export const ContactSection = () => {
           >
             <Card className="border-border/50">
               <CardContent className="p-8">
-                <form className="space-y-6">
+                <form action="https://formspree.io/f/xrgkywkd" method="POST" className="space-y-6">
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Your Name

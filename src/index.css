@@ -129,6 +129,10 @@ All colors MUST be HSL.
   html {
     scroll-behavior: smooth;
   }
+
+  a, button, input, textarea, select {
+    cursor: pointer;
+  }
 }
 
 /* Logo Scroll Animation */

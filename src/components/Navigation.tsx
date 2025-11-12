@@ -1,28 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Projects", path: "/projects" },
-    { name: "Testimonials", path: "/testimonials" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "#home" },
+    { name: "About", path: "#about" },
+    { name: "Services", path: "#services" },
+    { name: "Products", path: "#products" },
+    { name: "Projects", path: "#projects" },
+    { name: "Testimonials", path: "#testimonials" },
+    { name: "Contact", path: "#contact" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const scrollToSection = (path: string) => {
+    const element = document.querySelector(path);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setIsOpen(false);
+    }
+  };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b border-border">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-2xl border-b-2 border-white/20 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-20">
-          <Link to="/" className="flex items-center gap-2">
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-transparent to-yellow-400/10 animate-pulse pointer-events-none"></div>
+        
+        {/* Glass reflection effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent pointer-events-none"></div>
+        <div className="flex justify-between items-center h-16 lg:h-20 relative z-10">
+          <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }} className="flex items-center gap-2 group">
             <img 
               src="/assets/king-logo.png" 
               alt="King Power Systems" 
@@ -40,24 +51,27 @@ export const Navigation = () => {
               }}
             />
             <span className="text-xl lg:text-2xl font-bold text-foreground">King Power Systems</span>
-          </Link>
+          </a>
           
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <Link
+              <a
                 key={item.path}
-                to={item.path}
-                className={`text-foreground hover:text-primary transition-colors font-medium ${
-                  isActive(item.path) ? "text-primary" : ""
-                }`}
+                href={item.path}
+                onClick={(e) => { e.preventDefault(); scrollToSection(item.path); }}
+                className="relative text-foreground hover:text-yellow-400 transition-all duration-300 font-medium cursor-pointer group px-4 py-2 rounded-lg overflow-hidden"
               >
-                {item.name}
-              </Link>
+                <span className="relative z-10">{item.name}</span>
+                {/* Liquid glass hover effect */}
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-lg scale-0 group-hover:scale-100 transition-transform duration-500 ease-out"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-yellow-300/30 to-yellow-400/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 border-2 border-white/30 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+              </a>
             ))}
           </div>
 
           <button 
-            className="md:hidden p-2"
+            className="md:hidden p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -66,24 +80,25 @@ export const Navigation = () => {
         </div>
 
         {isOpen && (
-          <div className="md:hidden pb-4">
-            <div className="flex flex-col gap-4">
+          <div className="md:hidden pb-4 relative z-10">
+            <div className="flex flex-col gap-4 bg-white/10 backdrop-blur-xl rounded-2xl p-4 mt-4 border-2 border-white/20 shadow-[0_8px_32px_0_rgba(255,255,255,0.15)]">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.path}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`text-foreground hover:text-primary transition-colors font-medium ${
-                    isActive(item.path) ? "text-primary" : ""
-                  }`}
+                  href={item.path}
+                  onClick={(e) => { e.preventDefault(); scrollToSection(item.path); }}
+                  className="relative text-foreground hover:text-yellow-400 transition-all duration-300 font-medium cursor-pointer px-4 py-3 rounded-lg overflow-hidden group"
                 >
-                  {item.name}
-                </Link>
+                  <span className="relative z-10">{item.name}</span>
+                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-yellow-300/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
               ))}
             </div>
           </div>
         )}
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </>
   );
 };
